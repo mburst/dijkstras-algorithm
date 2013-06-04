@@ -19,8 +19,8 @@ class Graph:
                 distances[vertex] = 0
                 heapq.heappush(nodes, [0, vertex])
             else:
-                distances[vertex] = sys.maxint
-                heapq.heappush(nodes, [sys.maxint, vertex])
+                distances[vertex] = sys.maxsize
+                heapq.heappush(nodes, [sys.maxsize, vertex])
             previous[vertex] = None
         
         while nodes:
@@ -31,7 +31,7 @@ class Graph:
                     path.append(smallest)
                     smallest = previous[smallest]
                 return path
-            if distances[smallest] == sys.maxint: # All remaining vertices are inaccessible from source
+            if distances[smallest] == sys.maxsize: # All remaining vertices are inaccessible from source
                 break
             
             for neighbor in self.vertices[smallest]: # Look at all the nodes that this vertex is attached to
@@ -48,14 +48,15 @@ class Graph:
         
     def __str__(self):
         return str(self.vertices)
-        
-g = Graph()
-g.add_vertex('A', {'B': 7, 'C': 8})
-g.add_vertex('B', {'A': 7, 'F': 2})
-g.add_vertex('C', {'A': 8, 'F': 6, 'G': 4})
-g.add_vertex('D', {'F': 8})
-g.add_vertex('E', {'H': 1})
-g.add_vertex('F', {'B': 2, 'C': 6, 'D': 8, 'G': 9, 'H': 3})
-g.add_vertex('G', {'C': 4, 'F': 9})
-g.add_vertex('H', {'E': 1, 'F': 3})
-print g.shortest_path('A', 'H')
+
+if __name__ == '__main__':
+    g = Graph()
+    g.add_vertex('A', {'B': 7, 'C': 8})
+    g.add_vertex('B', {'A': 7, 'F': 2})
+    g.add_vertex('C', {'A': 8, 'F': 6, 'G': 4})
+    g.add_vertex('D', {'F': 8})
+    g.add_vertex('E', {'H': 1})
+    g.add_vertex('F', {'B': 2, 'C': 6, 'D': 8, 'G': 9, 'H': 3})
+    g.add_vertex('G', {'C': 4, 'F': 9})
+    g.add_vertex('H', {'E': 1, 'F': 3})
+    print(g.shortest_path('A', 'H'))
