@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -41,7 +40,7 @@ class Vertex implements Comparable<Vertex> {
 	public Integer getDistance() {
 		return distance;
 	}
-	
+
 	public void setId(Character id) {
 		this.id = id;
 	}
@@ -89,7 +88,12 @@ class Vertex implements Comparable<Vertex> {
 
 	@Override
 	public int compareTo(Vertex o) {
-		return this.distance < o.distance ? -1 : this.distance == o.distance ? 0 : 1;  
+		if (this.distance < o.distance)
+			return -1;
+		else if (this.distance > o.distance)
+			return 1;
+		else
+			return this.getId().compareTo(o.getId());
 	}
 	
 }
@@ -99,7 +103,7 @@ class Graph {
 	private final Map<Character, List<Vertex>> vertices;
 	
 	public Graph() {
-		this.vertices = new LinkedHashMap<Character, List<Vertex>>(); 
+		this.vertices = new HashMap<Character, List<Vertex>>();
 	}
 	
 	public void addVertex(Character character, List<Vertex> vertex) {
@@ -107,10 +111,9 @@ class Graph {
 	}
 	
 	public List<Character> getShortestPath(Character start, Character finish) {
-		Map<Character, Integer> distances = new LinkedHashMap<Character, Integer>();
+		final Map<Character, Integer> distances = new HashMap<Character, Integer>();
+		final Map<Character, Vertex> previous = new HashMap<Character, Vertex>();
 		PriorityQueue<Vertex> nodes = new PriorityQueue<Vertex>();
-		Map<Character, Vertex> previous = new LinkedHashMap<Character, Vertex>();
-		List<Character> path = new LinkedList<Character>();
 		
 		for(Character vertex : vertices.keySet()) {
 			if (vertex == start) {
@@ -126,7 +129,7 @@ class Graph {
 		while (!nodes.isEmpty()) {
 			Vertex smallest = nodes.poll();
 			if (smallest.getId() == finish) {
-				path = new LinkedList<Character>();
+				final List<Character> path = new ArrayList<Character>();
 				while (previous.get(smallest.getId()) != null) {
 					path.add(smallest.getId());
 					smallest = previous.get(smallest.getId());
@@ -147,7 +150,9 @@ class Graph {
 					forloop:
 					for(Vertex n : nodes) {
 						if (n.getId() == neighbor.getId()) {
+							nodes.remove(n);
 							n.setDistance(alt);
+							nodes.add(n);
 							break forloop;
 						}
 					}
