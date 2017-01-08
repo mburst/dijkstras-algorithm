@@ -9,18 +9,18 @@ function PriorityQueue () {
   this.enqueue = function (priority, key) {
     this._nodes.push({key: key, priority: priority });
     this.sort();
-  }
+  };
   this.dequeue = function () {
     return this._nodes.shift().key;
-  }
+  };
   this.sort = function () {
     this._nodes.sort(function (a, b) {
       return a.priority - b.priority;
     });
-  }
+  };
   this.isEmpty = function () {
     return !this._nodes.length;
-  }
+  };
 }
 
 /**
@@ -32,7 +32,7 @@ function Graph(){
 
   this.addVertex = function(name, edges){
     this.vertices[name] = edges;
-  }
+  };
 
   this.shortestPath = function (start, finish) {
     var nodes = new PriorityQueue(),
@@ -58,7 +58,7 @@ function Graph(){
       smallest = nodes.dequeue();
 
       if(smallest === finish) {
-        path;
+        path = [];
 
         while(previous[smallest]) {
           path.push(smallest);
@@ -85,7 +85,7 @@ function Graph(){
     }
 
     return path;
-  }
+  };
 }
 
 var g = new Graph();
