@@ -1,4 +1,4 @@
-PriorityQueue = () ->
+PriorityQueue = ->
   @_nodes = []
   @enqueue = (priority, key) ->
     @_nodes.push
@@ -6,24 +6,22 @@ PriorityQueue = () ->
       priority : priority
     @sort()
     return
-  @dequeue = () ->
+  @dequeue = ->
     @_nodes.shift().key
-  @sort = () ->
+  @sort = ->
     @_nodes.sort = (a, b) ->
       a.priority - b.priority
     return
-  @isEmpty = () ->
+  @isEmpty = ->
     !@_nodes.length
   return
 
 Graph = ->
   INFINITY = 1 / 0
   @vertices = {}
-
   @addVertex = (name, edges) ->
     @vertices[name] = edges
     return
-
   @shortestPath = (start, finish) ->
     nodes = new PriorityQueue
     distances = {}
@@ -91,4 +89,4 @@ g.addVertex 'H',
   E: 1
   F: 3
 
-console.log g.shortestPath('A', 'H').concat([ 'A' ]).reverse()
+console.log g.shortestPath('A', 'H').concat(['A']).reverse()
