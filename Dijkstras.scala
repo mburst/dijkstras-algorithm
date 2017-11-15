@@ -66,7 +66,7 @@ case class SimpleGraph[N](succs: Map[N, Map[N, Int]]) {
     var unreachedVertexSet:Set[N] = succs.keySet.filterNot(_ == start)
     while (!unreachedVertexSet.isEmpty) {
       currentDistance = updateGraph(start)(nextNode)(currentDistance)
-      nextNode = shortestPath(start)(succs.keySet.filterNot(unreachedVertexSet.contains(_)))(currentDistance) // 次のノードを決定させる
+      nextNode = shortestPath(start)(succs.keySet.filterNot(unreachedVertexSet.contains(_)))(currentDistance)
       unreachedVertexSet = unreachedVertexSet.-(nextNode)
     }
     println(currentDistance(finish)._2.reverse.toSeq)
