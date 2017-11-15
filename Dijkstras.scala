@@ -1,6 +1,6 @@
 import scala.collection.mutable
 
-object Dijkstras extends App {
+object Main extends App {
 
   val graphs = new SimpleGraph[String](
     Map(
@@ -15,6 +15,7 @@ object Dijkstras extends App {
     )
   )
   graphs.getShortestPath("A","E")
+
 }
 
 case class SimpleGraph[N](succs: Map[N, Map[N, Int]]) {
@@ -68,7 +69,7 @@ case class SimpleGraph[N](succs: Map[N, Map[N, Int]]) {
       nextNode = shortestPath(start)(succs.keySet.filterNot(unreachedVertexSet.contains(_)))(currentDistance) // 次のノードを決定させる
       unreachedVertexSet = unreachedVertexSet.-(nextNode)
     }
-    println("result : ", currentDistance(finish)._2.reverse.toSeq)
+    println(currentDistance(finish)._2.reverse.toSeq)
   }
 
 }
