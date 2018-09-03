@@ -8,7 +8,6 @@ function PriorityQueue () {
 
   this.enqueue = function (priority, key) {
     this._nodes.push({key: key, priority: priority });
-    this.sort();
   };
   this.dequeue = function () {
     return this._nodes.shift().key;
@@ -54,6 +53,8 @@ function Graph(){
       previous[vertex] = null;
     }
 
+    nodes.sort();
+    
     while(!nodes.isEmpty()) {
       smallest = nodes.dequeue();
 
@@ -80,6 +81,7 @@ function Graph(){
           previous[neighbor] = smallest;
 
           nodes.enqueue(alt, neighbor);
+          nodes.sort();
         }
       }
     }
