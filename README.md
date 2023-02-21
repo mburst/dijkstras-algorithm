@@ -8,6 +8,7 @@ You can also learn about unit testing by visiting http://maxburstein.com/blog/in
 
 ## Usage Example:
 ![Visualization](./graph.png)
+
 Each example should feature this graph and should print the path A->B->F->H in some format.
 ex. `py dijkstras.py` >>> \['H', 'F', 'B'\]
 
