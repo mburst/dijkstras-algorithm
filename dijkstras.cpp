@@ -6,24 +6,25 @@
 
 using namespace std;
 
+template<typename VertexT = char, typename DistanceT = int>
 class Graph
 {
-    unordered_map<char, const unordered_map<char, int>> vertices;
+    unordered_map<VertexT, const unordered_map<VertexT, DistanceT>> vertices;
     
 public:
-    void add_vertex(char name, const unordered_map<char, int>& edges)
+    void add_vertex(VertexT name, const unordered_map<VertexT, DistanceT>& edges)
     {
-        vertices.insert(unordered_map<char, const unordered_map<char, int>>::value_type(name, edges));
+        vertices.insert(typename unordered_map<VertexT, const unordered_map<VertexT, DistanceT>>::value_type(name, edges));
     }
     
-    vector<char> shortest_path(char start, char finish)
+    vector<VertexT> shortest_path(VertexT start, VertexT finish)
     {
-        unordered_map<char, int> distances;
-        unordered_map<char, char> previous;
-        vector<char> nodes;
-        vector<char> path;
+        unordered_map<VertexT, DistanceT> distances;
+        unordered_map<VertexT, VertexT> previous;
+        vector<VertexT> nodes;
+        vector<VertexT> path;
         
-        auto comparator = [&] (char left, char right) { return distances[left] > distances[right]; };
+        auto comparator = [&] (VertexT left, VertexT right) { return distances[left] > distances[right]; };
 
         for (auto& vertex : vertices)
         {
@@ -33,7 +34,7 @@ public:
             }
             else
             {
-                distances[vertex.first] = numeric_limits<int>::max();
+                distances[vertex.first] = numeric_limits<DistanceT>::max();
             }
             
             nodes.push_back(vertex.first);
@@ -43,7 +44,7 @@ public:
         while (!nodes.empty())
         {
             pop_heap(begin(nodes), end(nodes), comparator);
-            char smallest = nodes.back();
+            VertexT smallest = nodes.back();
             nodes.pop_back();
             
             if (smallest == finish)
@@ -57,14 +58,14 @@ public:
                 break;
             }
             
-            if (distances[smallest] == numeric_limits<int>::max())
+            if (distances[smallest] == numeric_limits<DistanceT>::max())
             {
                 break;
             }
             
             for (auto& neighbor : vertices[smallest])
             {
-                int alt = distances[smallest] + neighbor.second;
+                DistanceT alt = distances[smallest] + neighbor.second;
                 if (alt < distances[neighbor.first])
                 {
                     distances[neighbor.first] = alt;
@@ -80,7 +81,7 @@ public:
 
 int main()
 {
-    Graph g;
+    Graph<> g;
     g.add_vertex('A', {{'B', 7}, {'C', 8}});
     g.add_vertex('B', {{'A', 7}, {'F', 2}});
     g.add_vertex('C', {{'A', 8}, {'F', 6}, {'G', 4}});
@@ -90,7 +91,7 @@ int main()
     g.add_vertex('G', {{'C', 4}, {'F', 9}});
     g.add_vertex('H', {{'E', 1}, {'F', 3}});
     
-    for (char vertex : g.shortest_path('A', 'H'))
+    for (const auto& vertex : g.shortest_path('A', 'H'))
     {
         cout << vertex << endl;
     }
