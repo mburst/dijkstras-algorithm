@@ -13,5 +13,5 @@ Each example should feature this graph and should print the path A->B->F->H in s
 ex. `py dijkstras.py` >>> \['H', 'F', 'B'\]
 
 ## Current Supported Languages:
-C++, C#, Java, Javascript, Typescript, Coffeescript, PHP, **Python**, **Ruby**, Scala
+C++, C#, Java, Javascript, Typescript, Coffeescript, PHP, **Python**, **Ruby**, Scala, C, Go, Rust
 *(Bolded languages have associated test-suites)*
